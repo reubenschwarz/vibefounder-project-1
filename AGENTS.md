@@ -1,4 +1,11 @@
 Use 'bd' for task tracking.
+## Source of truth
+All work must be based on: docs/prd-psf-mvp.md
+
+When creating/claiming Beads tasks:
+- Read the PRD first.
+- In every bead description include: PRD section references + acceptance criteria IDs + definition of done.
+
 
 Rules:
 - Always run: bd ready --json
