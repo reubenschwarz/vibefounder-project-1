@@ -1,5 +1,7 @@
 
 
+
+
 cUse 'bd' for task tracking.
 
 ## Source of truth
@@ -23,8 +25,9 @@ When picking a task:
 
 ## Workflow rules
 
-1. **Check for work**: Run `bd ready --json` and select only tasks with `status=="open"`.
-   Recommended: `bd ready --json | jq -r '.[] | select(.status=="open") | .id' | head -n 1`
+1. 1. **Check for work (only allowed method)**:
+   `scripts/claim_next.sh <agent_name>`
+   If it prints `NO_OPEN_READY_TASKS`, stop and report.
 2. **Claim before working**: Immediately claim the task and set assignee:
    `bd update <id> --status in_progress --assignee <agent_name>`
    Never work on a task already `in_progress` unless you are the assignee.
