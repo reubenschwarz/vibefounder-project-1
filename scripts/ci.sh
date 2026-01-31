@@ -36,7 +36,7 @@ check_markdown_lint() {
       echo "EMPTY: $f"
       bad=1
     fi
-  done < <(find . -name '*.md' -not -path './.git/*' -not -path './.beads/*')
+  done < <(find . -name '*.md' -not -path './.git/*' -not -path './.beads/*' -not -path './node_modules/*')
   return "$bad"
 }
 
@@ -49,11 +49,31 @@ check_no_secrets() {
   return 0
 }
 
+check_typescript() {
+  npx tsc --noEmit
+}
+
+check_eslint() {
+  npx eslint . --max-warnings 0
+}
+
+check_next_build() {
+  npx next build
+}
+
+check_vitest() {
+  npx vitest run
+}
+
 # ---- main -------------------------------------------------------------------
 
 run_check "shellcheck"       check_shellcheck
 run_check "markdown-lint"    check_markdown_lint
 run_check "no-secrets"       check_no_secrets
+run_check "typescript"       check_typescript
+run_check "eslint"           check_eslint
+run_check "vitest"           check_vitest
+run_check "next-build"       check_next_build
 
 if [ "$FAIL" -ne 0 ]; then
   echo "CI FAILED"
